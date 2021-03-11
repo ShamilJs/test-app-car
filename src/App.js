@@ -9,21 +9,26 @@ import {
 	Switch,
 	Route,
   } from "react-router-dom";
-import { getDataFromServer } from './redux/action';
-import { useDispatch } from 'react-redux';
+import { getDataFromServer, showLoader } from './redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from './Components/Loader';
 
 
 
 const App = () => {
+	const loader = useSelector(state => state.show.loader)
+	
 	const dispatch = useDispatch()
 
-	// start()
-
-// времянка
+	// времянка
 	useEffect(() => {
+		dispatch(showLoader(true))
 		return  fetch(`https://murmuring-tor-81614.herokuapp.com/api/goods/`)
 		.then((response) => response.json())
-		.then((data) => dispatch(getDataFromServer(data)))
+		.then((data) => {
+			dispatch(getDataFromServer(data))
+			dispatch(showLoader(false))
+		})
 		// eslint-disable-next-line
 	}, [])
 
@@ -35,7 +40,8 @@ const App = () => {
 				<Title/>
 				<Switch>
 					<Route exact path="/">
-						<Products/>            
+						<Products/>
+						{loader && <Loader/> }
 					</Route>
 					<Route path="/Cart">
 						<Cart/>            

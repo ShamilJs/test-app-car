@@ -2,7 +2,9 @@ import { ADD_PRODUCT_TO_CART,
     CHANGE_NUMBER_PRODUCT_TO_CART,
     CLEAR_CART,
     GET_DATA_FROM_SERVER,
-    REMOVE_ITEM_IN_CART } from "./types"
+    REMOVE_ITEM_IN_CART, 
+    SHOW_LOADER, 
+    SHOW_MODAL} from "./types"
 
 
 // Временная, переделать на санку
@@ -39,5 +41,19 @@ export const removeItemInCart = id => {
 export const clearCart = () => {
     return {
         type: CLEAR_CART,
+    }
+}
+
+export const showModal = show => {
+    return {
+        type: SHOW_MODAL,
+        payload: show
+    }
+}
+
+export const showLoader = show => {
+    return {
+        type: SHOW_LOADER,
+        payload: show
     }
 }

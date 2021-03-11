@@ -8,5 +8,8 @@ export const REMOVE_ITEM_IN_CART = 'REMOVE_ITEM_IN_CART'
 
 export const CLEAR_CART = 'CLEAR_CART'
 
+export const SHOW_MODAL = 'SHOW_MODAL'
+
+export const SHOW_LOADER = 'SHOW_LOADER'
 
 

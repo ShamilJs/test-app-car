@@ -6,14 +6,26 @@ import { ADD_PRODUCT_TO_CART,
 
 const initiaState = {
     products: [],
-	cart: [],
-	numberOfGoods: {},
-	sumValues: 0,
-	total: 0
+	cart: JSON.parse(localStorage.getItem('cart')) || [],
+	numberOfGoods: JSON.parse(localStorage.getItem('numberOfGoods')) || {},
+	sumValues: JSON.parse(localStorage.getItem('sumValues')) || 0,
+	total: JSON.parse(localStorage.getItem('total')) || 0
 };
 
 
+
 export const appReducer = (state = initiaState, action) => {
+
+	const changeTotal = () => {
+		state.total = state.cart.reduce((acc, item) => {
+			return acc + (item.price * state.numberOfGoods[item.id])
+		}, 0)
+	}
+
+	const changeSumValues = () =>{ 
+		state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
+	}
+
     switch (action.type) {
         case GET_DATA_FROM_SERVER:
             return {...state, products: action.payload};
@@ -22,16 +34,18 @@ export const appReducer = (state = initiaState, action) => {
 				state.numberOfGoods[action.payload.id] : 1;
 			state.sumValues += 1;
 			let temp = state.cart.find(item => item.id === action.payload.id)
-			if (temp) state.numberOfGoods[action.payload.id] += 1; 
-			else state.cart = [...state.cart, action.payload]
+			if (temp) {
+				state.numberOfGoods[action.payload.id] += 1;
+			} else {
+				state.cart = [...state.cart, action.payload]
+			}
+			changeTotal()
             return state;
 		case CHANGE_NUMBER_PRODUCT_TO_CART:
 			state.sumValues = Math.abs(state.numberOfGoods[action.id] - action.payload) 
 			state.numberOfGoods[action.id] = action.payload
-			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
-			state.total = state.cart.reduce((acc, item) => {
-				return acc + (item.price * state.numberOfGoods[item.id])
-			}, 0)
+			changeSumValues();
+			changeTotal();
 			return state;
 		case REMOVE_ITEM_IN_CART: 
 			state.cart.forEach((item, i) => {
@@ -42,7 +56,7 @@ export const appReducer = (state = initiaState, action) => {
 				}
 			})
 			delete state.numberOfGoods[action.id]; 
-			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
+			changeSumValues();
 			return state
 		case CLEAR_CART: 
 			return {...state, cart: [], total: 0, sumValues: 0, numberOfGoods: {}}

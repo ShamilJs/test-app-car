@@ -1,88 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Noto+Sans+TC&display=swap');
-* {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
 
-*, *:before, *:after {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-:focus, :active {
-  outline: none;
-}
-
-a:focus, a:active {
-  outline: none;
-}
-
-nav, footer, header, aside {
-  display: block;
-}
-
-html, body {
-  height: 100%;
-  width: 100%;
-  font-size: 100%;
-  line-height: 1;
-  font-size: 14px;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  font-family: 'Noto Sans TC', sans-serif;
-  
-}
-
-input, button, textarea {
-  font-family: inherit;
-}
-
-input::-ms-clear {
-  display: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-button::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
-a, a:visited {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-ul li {
-  list-style: none;
-}
-
-img {
-  vertical-align: top;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-html {
-  scroll-behavior: smooth;
-}
 /* ///////////////////////////////////////////////////////////////////////////////////////////////////// */
 .container {
   margin: 0 auto;
   max-width: 1174px;
 }
-
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////// */
 .header {
   width: 100%;
   height: 80px;
@@ -91,17 +13,14 @@ html {
   justify-content: center;
   align-items: center;
   position: relative;
-  /* position: fixed;
-  z-index: 3; */
 }
-
 .header__title {
   font-family: 'Fascinate', cursive;
   font-size: 46px;
   font-weight: 700;
 }
 .header__cart{
-  position: absolute;
+  position: fixed;
   width: 50px;
   height: 50px;
   top: 10px;
@@ -110,11 +29,10 @@ html {
 .header__cart img {
   width: 100%;
   height: 100%;
-  filter: invert(1);
   cursor: pointer;
 }
 .header__cart img:hover{
-  filter: grayscale(100%);
+  filter: brightness(0) invert(1) brightness(0.25);
   transition: filter 500ms;
   display: block;
   transition: 500ms;
@@ -134,10 +52,23 @@ html {
   background-color: green;
   animation: notice 0.3s forwards ease-out;
 }
+.header__total{
+  padding: 5px;
+  border-radius: 20%;
+  position: absolute;
+  bottom: -30px;
+  right: -10px;
+  border: 2px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+  background-color: rgb(106, 187, 106);
+  animation: notice 0.3s forwards ease-out;
+}
 .header__notice-click {
   animation: click 0.8s  1s infinite alternate;
 }
-
 @keyframes notice {
   0% {
     opacity: 0;
@@ -146,7 +77,6 @@ html {
     opacity: 1;
   }
 }
-
 @keyframes click {
   0% {
     transform: rotate(5deg);
@@ -198,7 +128,6 @@ html {
   opacity: 0;
   padding: 10px;
 }
-
 .item-box:hover .item-box__content{
   animation: content 0.3s forwards ease-out;
 }
@@ -228,7 +157,6 @@ html {
 /* ////////////////////////////////////////////////////////////////////////////////// */
 @keyframes content {
   0% {
-    /* display: block; */
     opacity: 0;
     bottom: -50px;
     }
@@ -293,7 +221,7 @@ html {
   flex-wrap: wrap;
 }
 .products{
-  margin: 40px;
+  margin: 40px 0;
 }
 .products__title{
   font-family: 'Fascinate', cursive;
@@ -370,9 +298,8 @@ html {
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0; 
 }
 .cart__control-number button{
   position: absolute;
@@ -405,6 +332,70 @@ input::-webkit-inner-spin-button {
   transition: 500ms;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+.loader, .modal{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255,.6);
+  z-index: 3;
+}
+.spiner{
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 4px solid rgb(31, 142, 206);
+  border-top-color: rgba(255,255,255,.3);
+  animation: spin 1s ease-in-out infinite;
+
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+    }
+}
+.modal__content{
+  width: 250px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 20px;
+}
+.modal__control{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 50px;
+}
+.modal__control button{
+  width: 70px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: rgb(131, 199, 238);
+  font-size: 20px;
+}
+.modal__text{
+  margin-top: 20px;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: aliceblue;
+}
+.modal__control button:hover{
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 @media only screen and (max-width: 1440px) {
@@ -413,19 +404,6 @@ input::-webkit-inner-spin-button {
   }
   .header {
     height: 70px;
-  }
-  .settings__title, .conditions__title {
-    font-size: 28px;
-    margin-top: 20px;
-  }
-  .nav_nav__burger {
-    top: 20px;
-    right: 50px;
-    width: 30px;
-    height: 30px;
-  }
-  .close-act {
-    top: 35px;
   }
 }
 
@@ -436,19 +414,72 @@ input::-webkit-inner-spin-button {
   .header {
     height: 70px;
   }
-  .settings__title, .conditions__title {
+  .header__cart {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    right: 70px;
+  }
+  .products__title {
+    font-size: 26px;
+    margin-top: 10px;
+  }
+  .products {
+    margin: 20px 0;
+  }
+  .item-box {
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+  }
+  .item-box__title, .price-box__price  {
     font-size: 24px;
-    margin-top: 15px;
   }
-  .nav_nav__burger {
-    top: 15px;
-    right: 30px;
-    width: 30px;
-    height: 30px;
+  .price-box__btn {
+    width: 40px;
+    height: 40px;
   }
-  .close-act {
-    top: 30px;
+  .price-box__notice {
+    top: -30px;
+    right: -150px;
+    border-radius: 5px;
+    padding: 5px 2px;
   }
+  .cart {
+    margin: 40px 150px;
+  }
+  .cart__total {
+    font-size: 26px;
+  }
+  .cart__item {
+    height: 60px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+  }
+  .cart__title, .cart__price, .cart__total-price, .cart__total {
+    font-size: 26px;
+  }
+  .cart__left {
+    width: 50%;
+  }
+  .cart__control-number input {
+    font-size: 16px;
+  }
+  .cart__control-number button {
+    width: 20px;
+    height: 20px;
+    top: 4px;
+    font-size: 16px;
+  }
+  .cart__control-number button:nth-child(2) {
+    right: -20px;
+  }
+  .cart__control-number button:nth-child(3) {
+    left: -20px;
+  }
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -458,67 +489,36 @@ input::-webkit-inner-spin-button {
   .header {
     height: 60px;
   }
-  .settings__title, .conditions__title {
-    font-size: 22px;
-    margin-top: 15px;
+  .cart {
+    margin: 20px 100px;
   }
-  .main {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+  .cart__title, .cart__price, .cart__total-price, .cart__total, .cart__clear {
+    font-size: 18px;
   }
-  .conditions {
-    width: 100%;
-    height: auto;
-    -webkit-box-shadow: 0px 2px 0px 0px rgba(46, 62, 80, 0.15);
-            box-shadow: 0px 2px 0px 0px rgba(46, 62, 80, 0.15);
-    padding-bottom: 10px;
+  .cart__left {
+    width: 60%;
   }
-  .nav_nav__burger {
-    top: 15px;
-    right: 30px;
+  .cart__total-price {
+    margin-left: 100px;
+  }
+  .header__cart {
     width: 30px;
     height: 30px;
+    top: 20px;
+    right: 90px;
   }
-  .close-act {
-    top: 25px;
+  .header__notice {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    right: -10px;
+    top: -10px;
   }
-  .conditions__text li {
-    margin-bottom: 10px;
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 12px;
-    text-decoration: none;
-  }
-  .tic-tac__item {
-    height: 80px;
-    width: 80px;
-  }
-  .tic-tac__block {
-    width: 240px;
-  }
-  .tab__title {
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 16px;
-  }
-  .tab__gamer {
-    height: 40px;
-    font-size: 14px;
-    padding: 5px 5px;
-  }
-  .tic-tac__item {
-    font-size: 80px;
-  }
-  .alert p {
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 22px;
-    text-align: center;
-  }
-  .alert {
-    padding: 0 20px;
+  .header__total {
+    padding: 3px;
+    border-radius: 10%;
+    bottom: -30px;
+    right: -20px;
   }
 }
 
@@ -529,21 +529,10 @@ input::-webkit-inner-spin-button {
   .header {
     height: 45px;
   }
-  .settings {
-    width: 350px;
-  }
-  .settings__title, .conditions__title {
-    font-size: 18px;
-    margin-top: 10px;
-  }
-  .nav_nav__burger {
-    top: 8px;
-    right: 20px;
-    width: 30px;
-    height: 30px;
-  }
-  .close-act {
-    top: 20px;
+  .item-box {
+    margin: 5px;
+    width: 150px;
+    height: 150px;
   }
 }
 
@@ -553,21 +542,5 @@ input::-webkit-inner-spin-button {
   }
   .header {
     height: 45px;
-  }
-  .settings, .conditions {
-    width: 300px;
-  }
-  .settings__title, .conditions__title {
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  .nav_nav__burger {
-    top: 8px;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-  }
-  .close-act {
-    top: 20px;
   }
 }
