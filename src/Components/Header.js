@@ -36,7 +36,7 @@ export const Header = () => {
 						null
 					}
 				</Link> :
-				<Link className="header__cart" to="/">
+				<Link className="header__arrow" to="/">
 					<img src="./img/back-arrow.png" alt="cart"/>
 				</Link>
 			}
