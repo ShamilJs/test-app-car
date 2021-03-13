@@ -19,7 +19,7 @@ export const appReducer = (state = initiaState, action) => {
 	const changeTotal = () => {
 		state.total = state.cart.reduce((acc, item) => {
 			return acc + (item.price * state.numberOfGoods[item.id])
-		}, 0);
+		}, state.total);
 	};
 
 	const changeSumValues = () =>{ 
