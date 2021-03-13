@@ -1,13 +1,14 @@
-import { useDispatch } from "react-redux"
-import { addProductToCart } from "../redux/action"
+import React from 'react';
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "../redux/action";
 
 export const ProductItem = ({ name, price, image }) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	
 	const handelClick = () => {
 		const id = image + name + price;
-		dispatch(addProductToCart({name, price, image, id}))
-	}
+		dispatch(addProductToCart({name, price, image, id}));
+	};
 
     return (
         <div className="item-box">
@@ -28,5 +29,5 @@ export const ProductItem = ({ name, price, image }) => {
 				</div>
 			</div>
 		</div>
-    )
-}
+    );
+};

@@ -1,4 +1,6 @@
+import React from 'react';
 import { useLocation } from "react-router";
+
 
 export const Title = () => {
     const location = useLocation().pathname;
@@ -6,7 +8,5 @@ export const Title = () => {
 
 	let title = path ? 'Корзина' : 'Товары';
     
-    return (
-        <h1 className="products__title">{title}</h1>
-    )
-}
+    return <h1 className="products__title">{title}</h1>;
+};

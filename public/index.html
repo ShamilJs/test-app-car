@@ -9,15 +9,25 @@
       content="Web site created using create-react-app"
     />
     <title>INTERNET-SHOP</title>
+    <script src="./config.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
+    <!-- ------------------------Инициализация приложения --------------------------------------------------->
     <script>
       document.addEventListener('DOMContentLoaded', () => { 
-        const array = [1, 2, 3]
+        // Варианты инициалмизации по дилерам
+        configApp({dealers:  ["0c4aab30","1efa7e46","86e64a33"]})
+        // configApp({dealers:  ["0c4aab30","1efa7e46"]})
+        // configApp({dealers:  ["0c4aab30"]})
+        // configApp({dealers:  ["1efa7e46"]})
+        // configApp({dealers:  ["86e64a33"]})
+        // configApp({dealers:  []})
+        // configApp()
       });
     </script>
+    <!-- ------------------------------------------------------------------------------------------------ -->
   </body>
 </html>

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const EmptyCart = () => {
     return (
         <div className="empty">
@@ -5,7 +7,6 @@ export const EmptyCart = () => {
                 <p>Здесь пусто...</p>
                 <img src="./img/sad-smile.png" alt="sad-smile"/>
             </div>
-            
         </div>
-    )
-}
+    );
+};

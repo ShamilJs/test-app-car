@@ -1,47 +1,40 @@
 import React, { useEffect } from 'react';
-import { Header } from './Components/Header'
-import { Title } from './Components/Title'
-import { Products } from './Components/Products'
-import './App.css';
-import { Cart } from './Components/Cart';
+import { getDataFromServer } from './redux/action';
+import { useDispatch } from 'react-redux';
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
   } from "react-router-dom";
-import { getDataFromServer, showLoader } from './redux/action';
-import { useDispatch, useSelector } from 'react-redux';
+import { Header } from './Components/Header'
+import { Title } from './Components/Title'
+import { Products } from './Components/Products'
+import { Cart } from './Components/Cart';
 import { Loader } from './Components/Loader';
-
+import { ServerError } from './Components/ServerError';
+import './App.css';
 
 
 const App = () => {
-	const loader = useSelector(state => state.show.loader)
-	
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-	// времянка
 	useEffect(() => {
-		dispatch(showLoader(true))
-		return  fetch(`https://murmuring-tor-81614.herokuapp.com/api/goods/`)
-		.then((response) => response.json())
-		.then((data) => {
-			dispatch(getDataFromServer(data))
-			dispatch(showLoader(false))
-		})
+		const params = JSON.parse(localStorage.getItem('params'));
+		dispatch(getDataFromServer(params));
 		// eslint-disable-next-line
-	}, [])
+	}, []);
 
 
   	return (
 	  	<Router>
 			<Header/>
 			<div className="container">
+				<ServerError/>
 				<Title/>
 				<Switch>
 					<Route exact path="/">
 						<Products/>
-						{loader && <Loader/> }
+						<Loader/>
 					</Route>
 					<Route path="/Cart">
 						<Cart/>            
@@ -50,6 +43,6 @@ const App = () => {
 			</div>
 		</Router>
   	);
-}
+};
 
 export default App;

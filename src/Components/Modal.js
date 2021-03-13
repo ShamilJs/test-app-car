@@ -1,14 +1,15 @@
-import { useDispatch } from "react-redux"
-import { showModal, clearCart } from "../redux/action"
+import React from 'react';
+import { useDispatch } from "react-redux";
+import { showModal, clearCart } from "../redux/action";
 
 export const Modal = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleClick = e => {
-        if (e.target.textContent === 'Да') dispatch(clearCart())
-        dispatch(showModal(false))
-    }
+        if (e.target.textContent === 'Да') dispatch(clearCart());
+        dispatch(showModal(false));
+    };
 
     return (
         <div className="modal">
@@ -20,5 +21,5 @@ export const Modal = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

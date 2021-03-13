@@ -5,4 +5,4 @@ import { showReducer } from "./showReducer";
 export const rootReducer = combineReducers({
     app: appReducer,
     show: showReducer
-})
+});

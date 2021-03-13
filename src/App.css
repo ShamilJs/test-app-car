@@ -371,6 +371,20 @@ input::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.8);
   border-radius: 20px;
 }
+.modal__error{
+  background-color: rgba(204, 2, 2, 0.8);
+  width: 300px;
+  height: 80px;
+  animation: error 3s forwards ease-out;
+}
+@keyframes error {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .modal__control{
   width: 100%;
   display: flex;

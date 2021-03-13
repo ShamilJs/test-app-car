@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProductToCart, removeItemInCart } from "../redux/action";
 
 export const CartItem = ({  name, price, image, id }) => {
     const numberOfGoods = useSelector(state => state.app.numberOfGoods);
-    const [value, setValue] = useState(numberOfGoods[id])
-    const dispatch = useDispatch()
+    const [value, setValue] = useState(numberOfGoods[id]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(changeProductToCart(id, value))
+        dispatch(changeProductToCart(id, value));
         // eslint-disable-next-line
-    }, [value])
+    }, [value]);
 
-
-    const handleChange = (e) => {
+    const handleChange = e => {
         e.preventDefault();
-        if (e.target.textContent === '+') setValue(value => value + 1)
-        if (e.target.textContent === '-' && value > 1) setValue(value => value - 1)
-        if (e.target.value <= 0 ) return
-        setValue(value => +e.target.value)
-    }
+        if (e.target.textContent === '+') setValue(value => value + 1);
+        if (e.target.textContent === '-' && value > 1) setValue(value => value - 1);
+        if (e.target.value <= 0 ) return;
+        setValue(value => +e.target.value);
+    };
 
-    const removeItem = () => dispatch(removeItemInCart(id))
+    const removeItem = () => dispatch(removeItemInCart(id));
 
     return (
         <div className="cart__item">
@@ -49,5 +48,5 @@ export const CartItem = ({  name, price, image, id }) => {
                 onClick={removeItem}
             >×</button>
 		</div>
-    )
-}
+    );
+};

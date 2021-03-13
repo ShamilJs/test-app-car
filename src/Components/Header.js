@@ -3,18 +3,18 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
-	const sumValues = useSelector(state => state.app.sumValues)
-	const app = useSelector(state => state.app)
+	const sumValues = useSelector(state => state.app.sumValues);
+	const app = useSelector(state => state.app);
 	const location = useLocation().pathname;
 	const path = (location.split('/'))[(location.split('/')).length-1];
 
 	useEffect(() => {
-		localStorage.setItem('cart', JSON.stringify(app.cart))
-		localStorage.setItem('numberOfGoods', JSON.stringify(app.numberOfGoods))
-		localStorage.setItem('sumValues', JSON.stringify(app.sumValues))
-		localStorage.setItem('total', JSON.stringify(app.total))
+		localStorage.setItem('cart', JSON.stringify(app.cart));
+		localStorage.setItem('numberOfGoods', JSON.stringify(app.numberOfGoods));
+		localStorage.setItem('sumValues', JSON.stringify(app.sumValues));
+		localStorage.setItem('total', JSON.stringify(app.total));
 		// eslint-disable-next-line
-	}, [app.sumValues])
+	}, [app.sumValues]);
 
     return (
         <div className="header">
@@ -31,7 +31,9 @@ export const Header = () => {
 							<div className="header__notice">
 								<p>{sumValues}</p>
 							</div>
-							<p className="header__total">{app.total.toFixed(2)} <span>$</span></p>
+							<p className="header__total">
+								{app.total.toFixed(2)} <span>$</span>
+							</p>
 						</> :
 						null
 					}
@@ -41,5 +43,5 @@ export const Header = () => {
 				</Link>
 			}
 		</div>
-    )
-}
+    );
+};
