@@ -39,19 +39,12 @@ export const appReducer = (state = initiaState, action) => {
 			} else {
 				state.cart = [...state.cart, action.payload];
 			}
-			state.total = state.cart.reduce((acc, item) => {
-				return acc + (item.price * state.numberOfGoods[item.id])
-			}, 0);
 			// changeTotal();
             return state;
 		case CHANGE_NUMBER_PRODUCT_TO_CART:
 			state.sumValues = Math.abs(state.numberOfGoods[action.id] - action.payload);
 			state.numberOfGoods[action.id] = action.payload;
-			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
 			// changeSumValues();
-			state.total = state.cart.reduce((acc, item) => {
-				return acc + (item.price * state.numberOfGoods[item.id])
-			}, 0);
 			// changeTotal();
 			return state;
 		case REMOVE_ITEM_IN_CART: 
@@ -63,7 +56,6 @@ export const appReducer = (state = initiaState, action) => {
 				}
 			});
 			delete state.numberOfGoods[action.id]; 
-			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
 			// changeSumValues();
 			return state;
 		case CLEAR_CART: 
