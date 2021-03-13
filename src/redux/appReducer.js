@@ -16,15 +16,15 @@ const initiaState = {
 
 export const appReducer = (state = initiaState, action) => {
 
-	const changeTotal = () => {
-		state.total = state.cart.reduce((acc, item) => {
-			return acc + (item.price * state.numberOfGoods[item.id])
-		}, state.total);
-	};
+	// const changeTotal = () => {
+	// 	state.total = state.cart.reduce((acc, item) => {
+	// 		return acc + (item.price * state.numberOfGoods[item.id])
+	// 	}, 0);
+	// };
 
-	const changeSumValues = () =>{ 
-		state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
-	};
+	// const changeSumValues = () =>{ 
+	// 	state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
+	// };
 
     switch (action.type) {
         case GET_DATA_FROM_SERVER:
@@ -39,13 +39,20 @@ export const appReducer = (state = initiaState, action) => {
 			} else {
 				state.cart = [...state.cart, action.payload];
 			}
-			changeTotal();
+			state.total = state.cart.reduce((acc, item) => {
+				return acc + (item.price * state.numberOfGoods[item.id])
+			}, 0);
+			// changeTotal();
             return state;
 		case CHANGE_NUMBER_PRODUCT_TO_CART:
 			state.sumValues = Math.abs(state.numberOfGoods[action.id] - action.payload);
 			state.numberOfGoods[action.id] = action.payload;
-			changeSumValues();
-			changeTotal();
+			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
+			// changeSumValues();
+			state.total = state.cart.reduce((acc, item) => {
+				return acc + (item.price * state.numberOfGoods[item.id])
+			}, 0);
+			// changeTotal();
 			return state;
 		case REMOVE_ITEM_IN_CART: 
 			state.cart.forEach((item, i) => {
@@ -56,7 +63,8 @@ export const appReducer = (state = initiaState, action) => {
 				}
 			});
 			delete state.numberOfGoods[action.id]; 
-			changeSumValues();
+			state.sumValues = Object.values(state.numberOfGoods).reduce((a, b) => a + b, 0);
+			// changeSumValues();
 			return state;
 		case CLEAR_CART: 
 			return {...state, cart: [], total: 0, sumValues: 0, numberOfGoods: {}};
